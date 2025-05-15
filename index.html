@@ -99,6 +99,7 @@
 
 
 <script>
+  alert('start');
   async function fetchCsrfToken() {
     const res = await fetch("https://fabb-103-238-108-173.ngrok-free.app/api/csrf-token");
     const data = await res.json();
@@ -106,6 +107,7 @@
   }
 
   async function fetchDropdownOptions() {
+    alert('Dropdown option request');
     const res = await fetch("https://fabb-103-238-108-173.ngrok-free.app/api/bookings/organization-info/dropdown-option");
     const data = await res.json();
     if(data.locations){
