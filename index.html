@@ -1,132 +1,187 @@
 
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <style>
+    body { font-family: "Rubik", sans-serif!important; }
+    .form-control, .form-select { background-color: #f6f6f6!important; padding: 12px!important; }
+    .form-control:focus, .form-select:focus { box-shadow: none!important; border-color: #000!important; }
+    .solid-btn { background-color: #091353; padding: 10px 25px; border: 1px solid #091353; color: #fff; border-radius: 50px; }
+    .text-danger { font-size: 0.875rem; }
+  </style>
+
+
+<div class="container mt-5">
+  <div class="row">
+    <div class="form-title">
+        <h1>Organization Details</h1>
+        <p>Please provide your details so we can show workshops available for your organization type, year groups, and location.</p>
+    </div>
+
+    <form id="booking-form" class="form-main">
+      <h5 class="mb-3">Personal Detail</h5>
+      <div class="row">
+        <div class="col-lg-6 mb-3">
+          <label for="personal_name" class="form-label">Name Of Person*</label>
+          <input type="text" class="form-control" id="personal_name" name="personal_name" />
+          <div class="text-danger" id="error_personal_name"></div>
+        </div>
+        <div class="col-lg-6 mb-3">
+          <label for="personal_email" class="form-label">Person Email</label>
+          <input type="email" class="form-control" id="personal_email" name="personal_email" />
+          <div class="text-danger" id="error_personal_email"></div>
+        </div>
+        <div class="col-lg-6 mb-3">
+          <label for="personal_phone" class="form-label">Person Phone Number*</label>
+          <input type="text" class="form-control" id="personal_phone" name="personal_phone" />
+          <div class="text-danger" id="error_personal_phone"></div>
+        </div>
+        <div class="col-lg-6 mb-3">
+          <label for="position" class="form-label">Position in the School*</label>
+          <input type="text" class="form-control" id="position" name="position" />
+          <div class="text-danger" id="error_position"></div>
+        </div>
+      </div>
+
+      <h5 class="mb-3">Organization Detail</h5>
+      <div class="row">
+        <div class="col-lg-6 mb-3">
+          <label for="organization_name" class="form-label">Organization Name*</label>
+          <input type="text" class="form-control" id="organization_name" name="organization_name" />
+          <div class="text-danger" id="error_organization_name"></div>
+        </div>
+        <div class="col-lg-6 mb-3">
+          <label for="organization_type" class="form-label">Organization Type*</label>
+          <select class="form-select" id="organization_type" name="organization_type">
+            <option value="">Select</option>
+            <option value="School">School</option>
+            <option value="Youth club">Youth club</option>
+            <option value="Charity">Charity</option>
+            <option value="Others">Others</option>
+          </select>
+          <div class="text-danger" id="error_organization_type"></div>
+        </div>
+        <div class="col-lg-6 mb-3">
+          <label for="organization_email" class="form-label">Organization Email*</label>
+          <input type="email" class="form-control" id="organization_email" name="organization_email" />
+          <div class="text-danger" id="error_organization_email"></div>
+        </div>
+        <div class="col-lg-6 mb-3">
+          <label for="organization_phone" class="form-label">Organization Phone Number</label>
+          <input type="text" class="form-control" id="organization_phone" name="organization_phone" />
+          <div class="text-danger" id="error_organization_phone"></div>
+        </div>
+        <div class="col-lg-6 mb-3">
+          <label for="target_audience" class="form-label">Year Group they work with*</label>
+          <select class="form-select" id="target_audience" name="target_audience">
+            <option value="">Select</option>
+            <option value="Primary">Primary</option>
+            <option value="Secondary">Secondary</option>
+          </select>
+          <div class="text-danger" id="error_target_audience"></div>
+        </div>
+        <div class="col-lg-6 mb-3">
+          <label for="location" class="form-label">Organization Location*</label>
+          <select class="form-select" id="location" name="location">
+            <option value="">Select</option>
+            <option value="London">London</option>
+            <option value="Manchester">Manchester</option>
+          </select>
+          <div class="text-danger" id="error_location"></div>
+        </div>
+      </div>
+
+      <button type="submit" class="book-btn solid-btn mt-4">Submit</button>
+    </form>
+  </div>
+</div>
+
+
+<script>
+  async function fetchCsrfToken() {
+    const res = await fetch("https://fabb-103-238-108-173.ngrok-free.app/api/csrf-token");
+    const data = await res.json();
+    return data.csrf_token;
+  }
+
+  async function fetchDropdownOptions() {
+    const res = await fetch("https://fabb-103-238-108-173.ngrok-free.app/api/bookings/organization-info/dropdown-option");
+    const data = await res.json();
+    if(data.locations){
+        const dropdown = document.getElementById("location");
+
+        // Add default empty option
+        const defaultOption = document.createElement("option");
+        defaultOption.value = "";
+        defaultOption.text = "-- Select a City --";
+        dropdown.appendChild(defaultOption);
+    
+        // Populate from array
+        data.locations.forEach(city => {
+          const option = document.createElement("option");
+          option.value = city;
+          option.textContent = city;
+          dropdown.appendChild(option);
+        });
+    }
+  }
 
     
-    <!-- <link href="./css/style.css" rel="stylesheet" /> -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
-    <style>
-        body{
-            font-family: "Rubik", sans-serif!important;
+
+
+  document.getElementById("booking-form").addEventListener("submit", async function (e) {
+    e.preventDefault();
+    const form = e.target;
+
+    // Clear previous errors
+    document.querySelectorAll(".text-danger").forEach(el => el.innerText = "");
+
+    const payload = {
+      personal_name: form.personal_name.value,
+      personal_email: form.personal_email.value,
+      personal_phone: form.personal_phone.value,
+      position: form.position.value,
+      organization_name: form.organization_name.value,
+      organization_type: form.organization_type.value,
+      organization_email: form.organization_email.value,
+      organization_phone: form.organization_phone.value,
+      target_audience: form.target_audience.value,
+      location: form.location.value,
+    };
+
+    const csrfToken = await fetchCsrfToken();
+
+    const res = await fetch("https://fabb-103-238-108-173.ngrok-free.app/api/bookings/organization-info", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRF-Token": csrfToken
+      },
+      body: JSON.stringify(payload),
+      credentials: "include"
+    });
+
+    const responseData = await res.json();
+
+    if (!res.ok) {
+      // Show Zod errors
+      if (responseData?.errors) {
+        for (const key in responseData.errors) {
+          const errorEl = document.getElementById(`error_${key}`);
+          if (errorEl) errorEl.innerText = responseData.errors[key];
         }
-
-        .form-control, .form-select{
-            background-color: #f6f6f6!important;
-            padding: 12px!important;
-        }
-
-        .form-control:focus, .form-select:focus{
-            box-shadow: none!important;
-            border-color: #000!important;
-        }
-
-        .solid-btn{
-            background-color: #091353;
-            padding: 10px 25px;
-            border: 1px solid #091353;
-            color: #fff;
-            border-radius: 50px;
-        }
-    </style>
-
-
-    <div class="container">
-        <div class="row">
-            <div class="form-title">
-                <h1>Organization Details</h1>
-                <p>Please provide your details so we can show workshops available for your organization type, year groups, and location.</p>
-            </div>
-            <form class="form-main mt-3" >
-                <h5 class="mb-3" >Personal Detail</h5>
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="mb-3">
-                        <label for="name" class="form-label">Name Of Person*</label>
-                        <input type="text" class="form-control" id="name" placeholder="Enter Name">
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="mb-3">
-                        <label for="email-address" class="form-label">Person Email</label>
-                        <input type="email" class="form-control" id="email-address" placeholder="Enter Email">
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="mb-3">
-                        <label for="phone" class="form-label">Person Phone Number*</label>
-                        <input type="number" class="form-control" id="phone" placeholder="Enter Number">
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="mb-3">
-                        <label for="position" class="form-label">Position in the School*</label>
-                        <input type="text" class="form-control" id="position" placeholder="Enter Position">
-                        </div>
-                    </div>
-                </div>
-                <h5 class="mt-4 mb-3" >Organization Detail</h5>
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="mb-3">
-                        <label for="name" class="form-label">Organization Name*</label>
-                        <input type="text" class="form-control" id="name" placeholder="Enter Organization Name">
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="mb-3">
-                        <label for="email-address" class="form-label">Organization Type*</label>
-                        <select class="form-select" aria-label="Default select example">
-                            <option selected>Open this select menu</option>
-                            <option value="1">School</option>
-                            <option value="2">Youth club</option>
-                            <option value="3">Charity</option>
-                            <option value="3">Others</option>
-                        </select>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="mb-3">
-                        <label for="phone" class="form-label">Organization Email*</label>
-                        <input type="number" class="form-control" id="phone" placeholder="Enter Number">
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="mb-3">
-                        <label for="position" class="form-label">Organization Phone Number</label>
-                        <input type="text" class="form-control" id="position" placeholder="Enter Position">
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="mb-3">
-                        <label for="email-address" class="form-label">Year Group they work with*</label>
-                        <select class="form-select" aria-label="Default select example">
-                            <option selected>Open this select menu</option>
-                            <option value="1">School</option>
-                            <option value="2">Youth club</option>
-                            <option value="3">Charity</option>
-                            <option value="3">Others</option>
-                        </select>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="mb-3">
-                        <label for="email-address" class="form-label">Organization Location*</label>
-                        <select class="form-select" aria-label="Default select example">
-                            <option selected>Open this select menu</option>
-                            <option value="1">School</option>
-                            <option value="2">Youth club</option>
-                            <option value="3">Charity</option>
-                            <option value="3">Others</option>
-                        </select>
-                        </div>
-                    </div>
-                </div>
-                <button class="book-btn solid-btn mt-4">Submit</button>
-            </form>
-        </div>
-    </div>
+      } else {
+        alert(responseData.message || "Something went wrong");
+      }
+    } else {
+      // Store workshops in sessionStorage
+      sessionStorage.setItem("workshops", JSON.stringify(responseData.data.workshops));
+      document.cookie = `booking_id=${responseData.data.booking_id}; path=/; secure; samesite=strict;`;
+      window.location.href = "/available-workshops";
+    }
+  });
+</script>
 
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.min.js" integrity="sha384-RuyvpeZCxMJCqVUGFI0Do1mQrods/hhxYlcVfGPOfQtPJh0JCw12tUAZ/Mv10S7D" crossorigin="anonymous"></script>
