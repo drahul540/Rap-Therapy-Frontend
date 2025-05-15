@@ -107,14 +107,14 @@
   
   alert('start');
   async function fetchCsrfToken() {
-    const res = await fetch("https://fabb-103-238-108-173.ngrok-free.app/api/csrf-token");
+    const res = await fetch("https://994d-103-238-108-173.ngrok-free.app/api/csrf-token");
     const data = await res.json();
     return data.csrf_token;
   }
 
-  function fetchDropdownOptions() {
+  async function fetchDropdownOptions() {
     alert('Dropdown option request');
-    const res = await fetch("https://fabb-103-238-108-173.ngrok-free.app/api/bookings/organization-info/dropdown-option");
+    const res = await fetch("https://994d-103-238-108-173.ngrok-free.app/api/bookings/organization-info/dropdown-option");
     const data = await res.json();
     if(data.locations){
         const dropdown = document.getElementById("location");
