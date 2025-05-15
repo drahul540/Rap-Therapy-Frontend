@@ -104,6 +104,7 @@
 
 
 <script>
+  
   alert('start');
   async function fetchCsrfToken() {
     const res = await fetch("https://fabb-103-238-108-173.ngrok-free.app/api/csrf-token");
@@ -111,7 +112,7 @@
     return data.csrf_token;
   }
 
-  async function fetchDropdownOptions() {
+  function fetchDropdownOptions() {
     alert('Dropdown option request');
     const res = await fetch("https://fabb-103-238-108-173.ngrok-free.app/api/bookings/organization-info/dropdown-option");
     const data = await res.json();
@@ -135,7 +136,7 @@
   }
 
     
-  await fetchDropdownOptions()
+  fetchDropdownOptions()
 
   document.getElementById("booking-form").addEventListener("submit", async function (e) {
     e.preventDefault();
