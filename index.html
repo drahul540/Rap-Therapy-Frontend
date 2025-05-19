@@ -107,7 +107,7 @@
   
   alert('start');
   async function fetchCsrfToken() {
-    const res = await fetch("https://panel.raptherapy.co.uk/api/csrf-token",{
+    const res = await fetch("https://panel.raptherapy.co.uk/api/csrf-token/",{
       method: "GET",
       credentials: "include"
     });
@@ -117,7 +117,7 @@
 
   async function fetchDropdownOptions() {
     alert('Dropdown option request');
-    const res = await fetch("https://panel.raptherapy.co.uk/api/bookings/organization-info/dropdown-option",{
+    const res = await fetch("https://panel.raptherapy.co.uk/api/bookings/organization-info/dropdown-option/",{
       method: "GET",
       credentials: "include"
     });
