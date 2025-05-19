@@ -119,6 +119,7 @@
     alert('Dropdown option request');
     const res = await fetch("https://panel.raptherapy.co.uk/api/bookings/organization-info/dropdown-option/");
     const data = await res.json();
+    console.log(data,'----DATA')
     if(data.locations){
         const dropdown = document.getElementById("location");
 
