@@ -107,7 +107,10 @@
   
   alert('start');
   async function fetchCsrfToken() {
-    const res = await fetch("https://panel.raptherapy.co.uk/api/csrf-token");
+    const res = await fetch("https://panel.raptherapy.co.uk/api/csrf-token",{
+      method: "GET",
+      credentials: "include"
+    });
     const data = await res.json();
     return data.csrf_token;
   }
@@ -164,7 +167,7 @@
     const csrfToken = await fetchCsrfToken();
 
     const res = await fetch("https://panel.raptherapy.co.uk/api/bookings/organization-info", {
-      method: "POST",,
+      method: "POST",
       credentials: "include"
       headers: {
         "Content-Type": "application/json",
