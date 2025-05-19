@@ -168,7 +168,7 @@
 
     const res = await fetch("https://panel.raptherapy.co.uk/api/bookings/organization-info", {
       method: "POST",
-      credentials: "include"
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
         "X-CSRF-Token": csrfToken
