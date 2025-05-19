@@ -107,14 +107,14 @@
   
   alert('start');
   async function fetchCsrfToken() {
-    const res = await fetch("https://special-more-doe.ngrok-free.app/api/csrf-token");
+    const res = await fetch("https://panel.raptherapy.co.uk/api/csrf-token");
     const data = await res.json();
     return data.csrf_token;
   }
 
   async function fetchDropdownOptions() {
     alert('Dropdown option request');
-    const res = await fetch("https://special-more-doe.ngrok-free.app/api/bookings/organization-info/dropdown-option");
+    const res = await fetch("https://panel.raptherapy.co.uk/api/bookings/organization-info/dropdown-option");
     const data = await res.json();
     if(data.locations){
         const dropdown = document.getElementById("location");
@@ -160,7 +160,7 @@
 
     const csrfToken = await fetchCsrfToken();
 
-    const res = await fetch("https://special-more-doe.ngrok-free.app/api/bookings/organization-info", {
+    const res = await fetch("https://panel.raptherapy.co.uk/api/bookings/organization-info", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
